@@ -7,7 +7,6 @@ import (
 	"sort"
 	"strings"
 	"unicode"
-
 	"github.com/gocolly/colly"
 )
 
@@ -15,7 +14,7 @@ import (
 var stopWords = []string{
 	"メニュー", "検索", "ログイン", "コピーライト", "利用規約", "プライバシーポリシー",
 }
-
+var symbol = "、。，．・：；？！゛゜´｀¨＾￣＿ヽヾゝゞ〃仝々〆〇ー―‐／＼～∥｜…‥‘’“”（）〔〕［］｛｝〈〉《》「」『』【】＋－±×÷＝≠＜＞≦≧∞∴♂♀°′″℃￥＄￠￡％＃＆＊＠§☆★○●◎◇◆□■△▲▽▼※〒→←↑↓Å‰♯♭♪─│｡｢｣､①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩ㍉㌔㌢㍍㌘㌧㌃㌶㍑㍗㌍㌦㌣㌫㍊㌻㎜㎝㎞㎎㎏㏄㎡㍻〝〟№㏍℡㊤㊥㊦㊧㊨㈱㈲㈹㍾㍽㍼ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ０１２３４５６７８９abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !\"#$%&'()-^\\@[;:],./\\=~|`{+*}<>?_"
 // 漢字、ひらがな、カタカナのみを抽出する関数
 func filterJapaneseText(text string) string {
 	re := regexp.MustCompile(`[一-龯ぁ-んァ-ンー]+`)
@@ -24,8 +23,6 @@ func filterJapaneseText(text string) string {
 }
 
 // 文字列を正規化する関数（より強力な重複排除のため）
-// Removed unused function normalizeText
-
 func cleanText(text string) string {
 	text = strings.TrimSpace(text)
 	text = strings.ReplaceAll(text, "\n", " ")
@@ -102,6 +99,6 @@ func main() {
 	for _, char := range chars {
 		file.WriteString(string(char))
 	}
-
+	file.WriteString(string(symbol))
 	fmt.Printf("サイトで使用されている文字を %s に保存しました（合計: %d 文字）\n", outputFile, len(charSet))
 }
